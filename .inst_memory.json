@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "input": "hello. Provide only shell command as output.",
+        "output": "echo \"Hello!\"",
+        "name": "bro",
+        "favorite": false,
+        "uid": false
+    },
+    {
+        "input": "hello. Provide only shell command as output.",
+        "output": "echo \"Hello!\"",
+        "name": "bro",
+        "favorite": false,
+        "uid": false
+    }
+]

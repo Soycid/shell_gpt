@@ -183,10 +183,12 @@ def main(
 
     if add_instruction:
         typer.secho("Adding new instruction...", fg="green")
-        instruction_prompt_path = "prompts/instruction_generation_v2.txt"
+
+        instruction_prompt_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), \
+                                               "prompts/instruction_generation_v2.txt")
 
         instruction_prompt = Path(instruction_prompt_path).read_text()
-        custom_prompt = Path(prompt).read_text()
+        custom_prompt = prompt
 
         full_prompt = instruction_prompt + " " + custom_prompt
 
@@ -204,8 +206,12 @@ def main(
 
         confirmation = input("Execute? (y/n)")
 
-        #create a python file called temp.py and write the response_text to it
+        #replace occurrences of lsh with {os.path.abspath(__file__)}/sgpt.py in the response text
+        response_text = response_text.replace("lsh", f"python {os.path.abspath(__file__)}")
+        
+        #create a python file called temp.py and first write the program header, then write the response text
         with open("temp.py", "w") as file:
+            # file.write(program_header)
             file.write(response_text)
 
         if confirmation == "y":
@@ -236,7 +242,8 @@ def main(
             all_facts = FACT_MEMORY_FILE.read_text()
             filtered_facts = filter_facts(f"What is {query}?", all_facts, filter="hf", hf_api_key=hf_api_key)
 
-            fact_retrieval_prompt_path = "prompts/fact_retrieval_v1.txt"
+            fact_retrieval_prompt_path =  os.path.join(os.path.dirname(os.path.abspath(__file__)), \
+                                                       "prompts/fact_retrieval_v1.txt")
             retrieval_prompt = Path(fact_retrieval_prompt_path).read_text()
 
             full_prompt = f"{retrieval_prompt}\n{filtered_facts}\n What is {query}?"

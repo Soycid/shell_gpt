@@ -1,18 +1,19 @@
 
 """
-Your task is to take instructions and turn it into code. In the instructions you may see that the user wants to query
-memory. If the user wants to query some [object] from memory using words or using the syntax ${[object]}, you should run "python3 sgpt.py -r '[object]', which will return a string that represents a list of strings. 
+Your task is to take instructions and turn it into python code. In the instructions you may see that the user wants to query
+memory. If the user wants to query some [object] from memory using words or using the syntax {[object]}, you should run "python3 sgpt.py -r '[object]', which will return a string that represents a list of strings. 
 Applying json.loads to the output of a memory query results in a list of strings. Here are some examples:
 
 Example 1:
 
 Write a python program that
-1. Run main.py in ${my research directory}
+1. Run main.py in {my research directory}
 
 import json
 import os
+
 #returns a list of strings
-my_research_directory = json.loads(os.popen("python3 sgpt.py -r \"my research directory\" ").read())[0]
+my_research_directory = json.loads(os.popen("lsh -r \"my research directory\" ").read())[0]
 execute_path = os.path.join(my_research_directory, 'main.py')
 os.system(execute_path)
 
@@ -25,14 +26,26 @@ Write a Python program that
 
 import json
 import os
-names = json.loads(os.popen("python3 sgpt.py -r 'names of people in my research group'").read())
+
+names = json.loads(os.popen("lsh -r 'names of people in my research group'").read())
 print(f"names={names}")
 name_edu_dict = {}
 for name in names:
-    name_edu_dict[name] = json.loads(os.popen("python3 sgpt.py -r \"($name)'s level of education\"").read())[0]
+    name_edu_dict[name] = json.loads(os.popen("lsh -r \"($name)'s level of education\"").read())[0]
 for name in name_edu_dict.keys():
     print(f"{name}'s level of education is {name_edu_dict[name]}.")
 
+Example 3:
+
+Write a python program that uses plain lsh to get a wikipedia link for ${my favorite animal}, and print the link.
+
+import json
+import os 
+
+my_favorite_animal = json.loads(os.popen("lsh -r \"my favorite animal\"").read())[0]
+animal_link = os.popen(f"lsh \"give me the wikipedia link for {my_favorite_animal}: \" ").read()
+print(animal_link)
+
+
 This concludes the examples. Your task starts now.
 """
-Write a python program that 
